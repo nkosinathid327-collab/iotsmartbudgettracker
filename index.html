@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="Smart Budget Tracker - Secure personal finance management">
+    <meta name="theme-color" content="#1f4e6e">
+    <title>IoT-Smart-Budget-Tracker | Secure Finance Manager</title>
+    
+   
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+   
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+  
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+      
+        <header class="main-header">
+            <div class="brand">
+                <div class="logo">
+                    <i class="fas fa-chart-line logo-icon"></i>
+                    <h1>IoT-Smart-Budget-Tracker</h1>
+                </div>
+                <p class="tagline">AI-Powered Financial Intelligence</p>
+            </div>
+            <div class="security-badge">
+                <i class="fas fa-shield-alt"></i>
+                <span>Secure • Encrypted • Private</span>
+            </div>
+        </header>
+
+        <div class="currency-selector">
+    <label for="currencySelect">
+        <i class="fas fa-exchange-alt"></i>
+        Currency:
+    </label>
+    <select id="currencySelect" class="currency-select">
+        <option value="ZAR">🇿🇦 Rand (R)</option>
+        <option value="USD">🇺🇸 Dollar ($)</option>
+        <option value="EUR">🇪🇺 Euro (€)</option>
+        <option value="GBP">🇬🇧 Pound (£)</option>
+    </select>
+</div>
+<br>
+
+        <!-- Main Dashboard -->
+        <div class="dashboard">
+     
+            <div class="stats-grid">
+                <div class="stat-card balance-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-label">Current Balance</span>
+                        <h2 class="stat-value" id="balanceDisplay">R0.00</h2>
+                    </div>
+                </div>
+                
+                <div class="stat-card income-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-arrow-up"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-label">Total Income</span>
+                        <h3 class="stat-value" id="totalIncome">R0</h3>
+                    </div>
+                </div>
+                
+                <div class="stat-card expense-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-arrow-down"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-label">Total Expenses</span>
+                        <h3 class="stat-value" id="totalExpense">R0</h3>
+                    </div>
+                </div>
+                
+                <div class="stat-card savings-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-piggy-bank"></i>
+                    </div>
+                    <div class="stat-content">
+                        <span class="stat-label">Savings Rate</span>
+                        <h3 class="stat-value" id="savingsRate">0%</h3>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="content-grid">
+                <!-- Add Transaction Form -->
+                <div class="card form-card">
+                    <div class="card-header">
+                        <i class="fas fa-plus-circle"></i>
+                        <h3>Add Transaction</h3>
+                    </div>
+                    <form id="txForm" class="transaction-form">
+                        <div class="form-group">
+                            <label for="desc">
+                                <i class="fas fa-tag"></i>
+                                Description
+                            </label>
+                            <input type="text" id="desc" placeholder="e.g., Grocery Shopping, Salary" required maxlength="60">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="amount">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    Amount
+                                </label>
+                                <input type="number" id="amount" step="0.01" placeholder="0.00" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="type">
+                                    <i class="fas fa-exchange-alt"></i>
+                                    Type
+                                </label>
+                                <select id="type">
+                                    <option value="expense">💳 Expense</option>
+                                    <option value="income">💰 Income</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="category">
+                                <i class="fas fa-folder"></i>
+                                Category
+                            </label>
+                            <select id="category">
+                                <option value="Food">🍔 Food & Dining</option>
+                                <option value="Transport">🚗 Transport</option>
+                                <option value="Bills">💡 Bills & Utilities</option>
+                                <option value="Entertainment">🎬 Entertainment</option>
+                                <option value="Shopping">🛍️ Shopping</option>
+                                <option value="Health">🏥 Health</option>
+                                <option value="Salary">💼 Salary</option>
+                                <option value="Investment">📈 Investment</option>
+                                <option value="Other">📌 Other</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i>
+                            Add Transaction
+                        </button>
+                    </form>
+                    
+                    <button id="resetDemoBtn" class="btn-secondary">
+                        <i class="fas fa-trash-alt"></i>
+                        Reset All Data
+                    </button>
+                </div>
+
+                <!-- Recent Transactions -->
+                <div class="card transactions-card">
+                    <div class="card-header">
+                        <i class="fas fa-history"></i>
+                        <h3>Recent Transactions</h3>
+                    </div>
+                    
+                    <div class="filter-bar">
+                        <button class="filter-btn active" data-filter="all">All</button>
+                        <button class="filter-btn" data-filter="income">Income</button>
+                        <button class="filter-btn" data-filter="expense">Expenses</button>
+                    </div>
+                    
+                    <div class="transaction-list" id="transactionList">
+                        <div class="empty-state">
+                            <i class="fas fa-receipt"></i>
+                            <p>No transactions yet. Add your first transaction!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spending Chart -->
+                <div class="card chart-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-pie"></i>
+                        <h3>Spending by Category</h3>
+                    </div>
+                    <canvas id="categoryChart" width="400" height="300"></canvas>
+                </div>
+
+                <!-- AI Insights -->
+                <div class="card insights-card">
+                    <div class="card-header">
+                        <i class="fas fa-robot"></i>
+                        <h3>Smart Insights</h3>
+                    </div>
+                    <div id="smartAdvice" class="insights-content">
+                        <div class="loading">
+                            <i class="fas fa-spinner fa-pulse"></i>
+                            Analyzing your spending patterns...
+                        </div>
+                    </div>
+                    
+                    <div class="quick-tip" id="quickTip">
+                        <i class="fas fa-lightbulb"></i>
+                        <span id="tipText">Add transactions to receive personalized financial advice</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="main-footer">
+            <div class="footer-content">
+                <p><i class="fas fa-lock"></i>  Data stored locally/encrypted</p>
+                <p>Built for Microsoft Azure • IoT-Smart-Budget-Tracker</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- JavaScript Modules -->
+    <script src="js/storage.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
